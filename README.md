@@ -17,6 +17,12 @@
   </a>
 </p>
 
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.11-blue?style=flat" alt="Python 3.11">
+  <img src="https://img.shields.io/badge/Platform-Windows-lightgrey?style=flat" alt="Platform Windows">
+  <img src="https://img.shields.io/badge/Status-Stable-green?style=flat" alt="Status Stable">
+</p>
+
 ---
 
 ## 📌 Overview
@@ -24,6 +30,18 @@
 StegoTool Pro is a desktop steganography application that allows users to securely embed and extract hidden data within image, audio, and video files.
 
 It combines a modern desktop UI with local processing, encryption support, media preview, and guided workflows for both encoding and decoding.
+
+## 💡 Why StegoTool Pro?
+
+StegoTool Pro was built to demonstrate practical steganography combined with real-world usability.
+
+Unlike basic implementations, it focuses on:
+- Multi-media support (image, audio, video)
+- Secure encryption with integrity checks
+- Decoy-based plausible deniability
+- Desktop-first user experience with previews
+
+The goal was to bridge the gap between theoretical steganography and a usable software product.
 
 ---
 
@@ -59,22 +77,32 @@ It combines a modern desktop UI with local processing, encryption support, media
 
 ---
 
+## 🎯 How It Works
+
+1. Select your **secret payload** (text or file)  
+2. Choose a **carrier media file** (image, audio, or video)  
+3. Set **password(s)** for security and optional decoy  
+4. Click **Encode** to generate the stego file  
+5. Use **Decode** with the correct password to extract data  
+
+---
+
 ## 🖼️ Screenshots
 
 ### Encode Workflow
 
 <p align="center">
-  <img src="docs/screenshots/encode-payload.png" width="900"><br><br>
-  <img src="docs/screenshots/encode-carrier.png" width="900"><br><br>
-  <img src="docs/screenshots/encode-passwords.png" width="900"><br><br>
-  <img src="docs/screenshots/encode-result.png" width="900">
+  <img src="docs/screenshots/encode-payload.png" width="800"><br><br>
+  <img src="docs/screenshots/encode-carrier.png" width="800"><br><br>
+  <img src="docs/screenshots/encode-passwords.png" width="800"><br><br>
+  <img src="docs/screenshots/encode-result.png" width="800">
 </p>
 
 ### Decode Workflow
 
 <p align="center">
-  <img src="docs/screenshots/decode-input.png" width="900"><br><br>
-  <img src="docs/screenshots/decode-result.png" width="900">
+  <img src="docs/screenshots/decode-input.png" width="800"><br><br>
+  <img src="docs/screenshots/decode-result.png" width="800">
 </p>
 
 ---
