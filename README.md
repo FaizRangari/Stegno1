@@ -1,109 +1,129 @@
 # 🔐 StegoTool Pro
 
-> Hide and extract data in images, audio, and video — securely and locally.
+<p align="center">
+  <img src="assets/logo.png" alt="StegoTool Pro Logo" width="120">
+</p>
+
+<p align="center">
+  <strong>Hide and extract data in images, audio, and video — securely and locally.</strong>
+</p>
+
+<p align="center">
+  <a href="https://github.com/iJainamJain/StegoTool-Pro/releases/tag/v1.0.0">
+    <img src="https://img.shields.io/badge/Release-v1.0.0-6f6ad9?style=for-the-badge" alt="Release v1.0.0">
+  </a>
+  <a href="https://github.com/iJainamJain/StegoTool-Pro/releases/download/v1.0.0/StegoToolPro-Setup-1.0.0.exe">
+    <img src="https://img.shields.io/badge/Download-Installer-19d3c5?style=for-the-badge" alt="Download Installer">
+  </a>
+</p>
 
 ---
 
 ## 📌 Overview
 
-StegoTool Pro is a desktop steganography application that enables users to embed and extract hidden data within media files using encryption and integrity verification.
+StegoTool Pro is a desktop steganography application that allows users to securely embed and extract hidden data within image, audio, and video files.
 
-Designed with a clean UI and guided workflow, it supports secure data concealment across multiple media formats.
+It combines a modern desktop UI with local processing, encryption support, media preview, and guided workflows for both encoding and decoding.
 
 ---
 
 ## ✨ Features
 
-- 🔒 Encode secret data into media files (image, audio, video)
+- 🔒 Encode secret data into media files
 - 🔓 Decode hidden data with integrity verification
-- 🕵️ Decoy password support (plausible deniability)
+- 🕵️ Decoy password support for plausible deniability
 - 🎬 Built-in preview for image, audio, and video
-- 💻 Desktop application (no browser required)
-- ⚡ Fully local processing (no external API)
+- 💻 Desktop application with guided workflow
+- ⚡ Fully local processing with no external API dependency
+- 📘 Tutorial page for first-time users
+
+---
+
+## 📦 Download
+
+<p>
+  <a href="https://github.com/iJainamJain/StegoTool-Pro/releases/download/v1.0.0/StegoToolPro-Setup-1.0.0.exe">
+    <img src="https://img.shields.io/badge/Download%20StegoTool%20Pro%20Installer-v1.0.0-19d3c5?style=for-the-badge" alt="Download StegoTool Pro Installer">
+  </a>
+</p>
+
+### Installation
+1. Download the installer from the button above  
+2. Run `StegoToolPro-Setup-1.0.0.exe`  
+3. Complete installation  
+4. Launch from Start Menu or Desktop  
+
+> Windows may show a SmartScreen warning because the app is not code-signed yet.  
+> Click **More info** → **Run anyway**.
 
 ---
 
 ## 🖼️ Screenshots
 
 ### Encode Workflow
-![Payload](docs/screenshots/encode-payload.png)
-![Carrier](docs/screenshots/encode-carrier.png)
-![Passwords](docs/screenshots/encode-passwords.png)
-![Result](docs/screenshots/encode-result.png)
+
+<p align="center">
+  <img src="docs/screenshots/encode-payload.png" alt="Encode Payload" width="900"><br><br>
+  <img src="docs/screenshots/encode-carrier.png" alt="Encode Carrier" width="900"><br><br>
+  <img src="docs/screenshots/encode-passwords.png" alt="Encode Passwords" width="900"><br><br>
+  <img src="docs/screenshots/encode-result.png" alt="Encode Result" width="900">
+</p>
 
 ### Decode Workflow
-![Input](docs/screenshots/decode-input.png)
-![Result](docs/screenshots/decode-result.png)
 
----
-
-## 📦 Installation
-
-👉 Download the latest version:
-
-➡️ https://github.com/iJainamJain/StegoTool-Pro/releases
-
-### Steps
-
-1. Download `StegoToolPro-Setup-1.0.0.exe`
-2. Run the installer
-3. Launch from Start Menu or Desktop
+<p align="center">
+  <img src="docs/screenshots/decode-input.png" alt="Decode Input" width="900"><br><br>
+  <img src="docs/screenshots/decode-result.png" alt="Decode Result" width="900">
+</p>
 
 ---
 
 ## ⚙️ Tech Stack
 
-- **Frontend:** HTML, CSS, JavaScript (PyWebView UI)
-- **Backend:** Python (FastAPI)
-- **Core:**
+- **Frontend:** HTML, CSS, JavaScript
+- **Desktop Shell:** PyWebView
+- **Backend:** FastAPI
+- **Core Libraries:**
   - NumPy
   - PyCryptodome
   - Pillow
-  - AV (video processing)
+  - AV
 
 ---
 
 ## 🔐 Security Notes
 
-- All operations are performed locally
-- No data is transmitted externally
+- All processing is performed locally
+- No data is sent to external services
 - Supports encrypted payload handling
-- Integrity verification ensures data correctness
+- Integrity verification helps confirm decoded output correctness
 
 ---
 
 ## 📁 Project Structure
 
-
+```text
 stego_app/
-├── app/ # App launcher (PyWebView)
-├── api/ # FastAPI endpoints
-├── core/ # Steganography + crypto logic
-├── ui/ # Frontend UI
-├── assets/ # Icons, tutorial images
-├── build/ # Packaging config
-├── installer/ # Installer setup
+├── app/        # App launcher
+├── api/        # FastAPI endpoints and schemas
+├── core/       # Steganography and crypto logic
+├── ui/         # Frontend UI
+├── assets/     # Icons and tutorial images
+├── docs/       # Notes and screenshots
+├── installer/  # Inno Setup installer files
+├── build/      # Build configuration
+👨‍💻 Developers
+Jainam Jain (Lead)
+Sahil Patil
+Himanshu Shinde
+Aditya Deshmukh
 
+Vidyalankar Institute of Technology
 
----
+🚀 Version
 
-## 👨‍💻 Developers
+v1.0.0 — Initial stable release
 
-- Jainam Jain  
-- Sahil Patil  
-- Himanshu Shinde  
-- Aditya Deshmukh  
+⭐ Feedback
 
-**Vidyalankar Institute of Technology**
-
----
-
-## 🚀 Version
-
-**v1.0.0 — Initial stable release**
-
----
-
-## ⭐ Feedback
-
-If you try the app, feel free to share feedback or suggestions!
+If you try the app, feel free to share feedback, issues, or suggestions through the GitHub repository.
