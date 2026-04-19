@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>StegoTool Pro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="min-h-screen bg-[#080b13] text-slate-100">
+  <div class="app-shell" id="appShell">
+    <aside class="sidebar">
+      <div class="sidebar-frame">
+        <div class="sidebar-header">
+          <div class="brand-mark">
+            <img src="../assets/logo.png" class="app-logo" alt="StegoTool Pro">
+          </div>
+          <div class="brand-text">
+            <div class="brand-name">StegoTool Pro</div>
+            <div class="brand-sub">Hide and extract data in media files</div>
+          </div>
+          <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar" aria-expanded="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+        <nav class="nav">
+          <button class="nav-item active" data-view="encode" title="Encode">
+            <span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 11V8a7 7 0 0 1 14 0v3h1v10H4V11h1Zm2 0h10V8A5 5 0 0 0 7 8v3Zm4 4v3h2v-3h-2Z"/></svg></span>
+            <span class="nav-label">Encode</span>
+          </button>
+          <button class="nav-item" data-view="decode" title="Decode">
+            <span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 9V7a5 5 0 0 0-9.55-2.06L5.64 4.1A7 7 0 0 1 19 7v2h1v12H4V9h13Zm-6 5v3h2v-3h-2Z"/></svg></span>
+            <span class="nav-label">Decode</span>
+          </button>
+          <button class="nav-item" data-view="tutorial" title="Tutorial">
+            <span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h11a3 3 0 0 1 3 3v13H7a3 3 0 0 1-3-3V5a1 1 0 0 1 1-1Zm2 13a1 1 0 0 0 1 1h9V7a1 1 0 0 0-1-1H7v11Zm2-8h6v2H9V9Zm0 4h5v2H9v-2Z"/></svg></span>
+            <span class="nav-label">Tutorial</span>
+          </button>
+          <button class="nav-item" data-view="about" title="About">
+            <span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 10h2v8h-2v-8Zm0-4h2v2h-2V6Zm1-4a10 10 0 1 0 0 20 10 10 0 0 0 0-20Z"/></svg></span>
+            <span class="nav-label">About</span>
+          </button>
+        </nav>
+      </div>
+    </aside>
+
+    <main class="main">
+      <section class="topbar">
+        <div>
+          <h1 id="pageTitle">Encode</h1>
+          <p id="pageSubtitle">Build a dual-slot payload and embed it into image, audio, or video media.</p>
+        </div>
+        <div class="status-pill" id="statusPill">Ready</div>
+      </section>
+
+      <div class="progress-wrap">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+
+      <section id="encodeView" class="view active">
+        <div class="grid xl:grid-cols-[1.1fr_0.9fr] gap-5">
+          <div class="panel">
+            <div class="panel-title">Payload</div>
+            <label>Secret text</label>
+            <div class="compact-editor">
+              <textarea id="secretText" class="compact-textarea" rows="2" placeholder="Type the primary secret message"></textarea>
+              <button class="tertiary-btn compact-expand" data-editor="secretText" data-title="Secret text">Expand</button>
+            </div>
+            <label>Secret file path</label>
+            <div class="path-field">
+              <input id="secretFilePath" placeholder="C:\path\to\secret.bin">
+              <button class="browse-btn" data-dialog="open" data-target="secretFilePath" data-kind="secret">Browse</button>
+            </div>
+            <div class="mini-preview" id="secretFilePreview">No secret file selected.</div>
+            <label>Decoy text</label>
+            <div class="compact-editor">
+              <textarea id="decoyText" class="compact-textarea" rows="2" placeholder="Optional decoy message"></textarea>
+              <button class="tertiary-btn compact-expand" data-editor="decoyText" data-title="Decoy text">Expand</button>
+            </div>
+            <label>Decoy file path</label>
+            <div class="path-field">
+              <input id="decoyFilePath" placeholder="C:\path\to\decoy.txt">
+              <button class="browse-btn" data-dialog="open" data-target="decoyFilePath" data-kind="secret">Browse</button>
+            </div>
+            <div class="mini-preview" id="decoyFilePreview">No decoy file selected.</div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">Carrier</div>
+            <label>Cover media path</label>
+            <div class="path-field">
+              <input id="coverMediaPath" placeholder="C:\path\to\cover.png">
+              <button class="browse-btn" data-dialog="open" data-target="coverMediaPath" data-kind="media">Browse</button>
+            </div>
+            <div class="preview-card" id="coverPreview">
+              <div class="preview-title">Cover Media Preview</div>
+              <div class="preview-empty">No cover media selected.</div>
+            </div>
+            <label>Technique</label>
+            <select id="encodeTechnique">
+              <option>LSB</option>
+              <option>PVD</option>
+            </select>
+            <label>Primary password</label>
+            <input id="primaryPassword" type="password" autocomplete="new-password">
+            <label>Decoy password</label>
+            <input id="decoyPassword" type="password" autocomplete="new-password" placeholder="Defaults to primary password">
+            <div class="switch-row">
+              <label class="switch"><input id="useIntegrity" type="checkbox" checked><span></span>Integrity tag</label>
+              <label class="switch"><input id="useHint" type="checkbox" checked><span></span>Technique hint</label>
+            </div>
+            <label>Output path</label>
+            <div class="path-field">
+              <input id="outputPath" placeholder="C:\path\to\output_stego.png">
+              <button class="browse-btn" data-dialog="save" data-target="outputPath" data-suggest="output_stego">Browse</button>
+            </div>
+            <button class="primary-btn" id="encodeBtn">Encode payload</button>
+          </div>
+        </div>
+        <div class="panel result-panel">
+          <div class="panel-title">Encode Result</div>
+          <div id="encodeSummary" class="result-card empty">No encode job has run yet.</div>
+        </div>
+      </section>
+
+      <section id="decodeView" class="view">
+        <div class="grid xl:grid-cols-[0.85fr_1.15fr] gap-5">
+          <div class="panel">
+            <div class="panel-title">Decode</div>
+            <label>Stego file path</label>
+            <div class="path-field">
+              <input id="stegoFilePath" placeholder="C:\path\to\stego.png">
+              <button class="browse-btn" data-dialog="open" data-target="stegoFilePath" data-kind="media">Browse</button>
+            </div>
+            <label>Password</label>
+            <input id="decodePassword" type="password" autocomplete="current-password">
+            <label>Technique</label>
+            <select id="decodeTechnique">
+              <option>Auto</option>
+              <option>LSB</option>
+              <option>PVD</option>
+            </select>
+            <button class="primary-btn" id="decodeBtn">Decode payload</button>
+            <div class="preview-card" id="stegoPreview">
+              <div class="preview-title">Selected File Preview</div>
+              <div class="preview-empty">No stego file selected.</div>
+            </div>
+          </div>
+          <div class="panel result-panel">
+            <div class="panel-title">Decoded Result</div>
+            <div id="decodeResult" class="result-card empty">No decoded payload yet.</div>
+            <div class="actions">
+              <div class="path-field">
+                <input id="saveDecodedPath" placeholder="C:\path\to\decoded-output.bin">
+                <button class="browse-btn" data-dialog="save" data-target="saveDecodedPath" data-suggest="decoded-output.bin">Browse</button>
+              </div>
+              <button class="secondary-btn" id="saveDecodedBtn" disabled>Save decoded</button>
+              <button class="secondary-btn" id="openDecodedBtn" disabled>Open folder</button>
+              <button class="tertiary-btn" id="copyDecodedPathBtn" disabled>Copy path</button>
+            </div>
+            <div class="preview-card decoded-output-card" id="decodedOutputPreview">
+              <div class="preview-title">Decoded Output Preview</div>
+              <div class="preview-empty">No decoded output yet.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tutorialView" class="view">
+        <div class="tutorial-page">
+          <div class="tutorial-intro">
+            <div>
+              <h2>StegoTool Pro Tutorial</h2>
+              <p>Follow a short guided walkthrough for hiding a payload or extracting one from an encoded media file.</p>
+            </div>
+            <div class="tutorial-selector" aria-label="What do you want to learn?">
+              <span>What do you want to learn?</span>
+              <div class="tutorial-tabs">
+                <button class="tutorial-tab active" data-tutorial-flow="encode">Encode</button>
+                <button class="tutorial-tab" data-tutorial-flow="decode">Decode</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="tutorial-flow active" id="encodeTutorial">
+            <article class="tutorial-step">
+              <div class="tutorial-step-copy">
+                <span class="step-badge">1</span>
+                <h3>Add your payload</h3>
+                <p>Enter secret text or choose a secret file. Optionally add decoy text or a decoy file; this is the content that will be hidden.</p>
+              </div>
+              <figure><img src="../assets/tutorial/encode-payload.png" alt="Encode payload fields"></figure>
+            </article>
+            <article class="tutorial-step">
+              <div class="tutorial-step-copy">
+                <span class="step-badge">2</span>
+                <h3>Choose carrier media</h3>
+                <p>Select the image, audio, or video file that will carry the hidden payload, then choose the steganography technique if needed.</p>
+              </div>
+              <figure><img src="../assets/tutorial/encode-carrier.png" alt="Encode carrier media fields"></figure>
+            </article>
+            <article class="tutorial-step">
+              <div class="tutorial-step-copy">
+                <span class="step-badge">3</span>
+                <h3>Set passwords and options</h3>
+                <p>The primary password protects the real payload. A decoy password can protect alternate content, while integrity tag and technique hint are optional controls.</p>
+              </div>
+              <figure><img src="../assets/tutorial/encode-passwords.png" alt="Encode password and option controls"></figure>
+            </article>
+            <article class="tutorial-step">
+              <div class="tutorial-step-copy">
+                <span class="step-badge">4</span>
+                <h3>Encode the payload</h3>
+                <p>Review the fields and click the Encode button to create the stego file.</p>
+              </div>
+              <figure><img src="../assets/tutorial/encode-action.png" alt="Encode action button"></figure>
+            </article>
+            <article class="tutorial-step">
+              <div class="tutorial-step-copy">
+                <span class="step-badge">5</span>
+                <h3>Review the result</h3>
+                <p>The result area shows status, payload summary, output path, and related metadata.</p>
+              </div>
+              <figure><img src="../assets/tutorial/encode-result.png" alt="Encode result card"></figure>
+            </article>
+          </div>
+
+          <div class="tutorial-flow" id="decodeTutorial">
+            <article class="tutorial-step">
+              <div class="tutorial-step-copy">
+                <span class="step-badge">1</span>
+                <h3>Select the encoded file</h3>
+                <p>Choose the stego file, enter the password, use Auto or a specific technique mode as needed, and click Decode to begin extraction.</p>
+              </div>
+              <figure><img src="../assets/tutorial/decode-input.png" alt="Decode input fields"></figure>
+            </article>
+            <article class="tutorial-step">
+              <div class="tutorial-step-copy">
+                <span class="step-badge">2</span>
+                <h3>Review the decoded output</h3>
+                <p>The result shows status, recovered file info, integrity status, preview, and available actions such as save, open, and copy path.</p>
+              </div>
+              <figure><img src="../assets/tutorial/decode-result.png" alt="Decode result card"></figure>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="aboutView" class="view">
+        <div class="about-layout">
+          <div class="about-main">
+            <section class="about-section about-hero">
+              <h2>StegoTool Pro</h2>
+              <p>StegoTool Pro is a local desktop tool for hiding and extracting encrypted payloads inside supported media files.</p>
+              <p>It combines a Python backend with a desktop WebView interface to provide secure, offline steganography workflows for images, audio, and video.</p>
+            </section>
+
+            <section class="about-section">
+              <h3>Core Capabilities</h3>
+              <div class="capability-list">
+                <div><strong>Hide payloads</strong><span>Conceal data inside supported image, audio, and video carriers.</span></div>
+                <div><strong>Extract payloads</strong><span>Recover concealed content from encoded media files.</span></div>
+                <div><strong>Text or file input</strong><span>Support both typed messages and file-based payloads.</span></div>
+                <div><strong>Local privacy</strong><span>Run entirely on the local machine for privacy-focused use.</span></div>
+                <div><strong>Primary and decoy flows</strong><span>Work with both primary and decoy payload workflows.</span></div>
+              </div>
+            </section>
+
+            <section class="about-section">
+              <h3>Special Features</h3>
+              <div class="feature-list">
+                <div><strong>Dual-password payload model</strong><span>One password can unlock the primary payload while another can reveal a decoy payload.</span></div>
+                <div><strong>Single-field decode workflow</strong><span>Decoding stays simple with one password field while the tool resolves the first valid payload.</span></div>
+                <div><strong>Integrity tag support</strong><span>Optional integrity metadata can help verify decoded output.</span></div>
+                <div><strong>Technique hint support</strong><span>Optional hints can assist decode workflows without exposing unnecessary detail.</span></div>
+              </div>
+            </section>
+
+            <section class="about-section">
+              <h3>Supported Media & Techniques</h3>
+              <div class="technique-rows">
+                <div><span>Images</span><p><strong>LSB</strong><strong>PVD</strong></p></div>
+                <div><span>Audio</span><p><strong>LSB</strong></p></div>
+                <div><span>Video</span><p><strong>LSB</strong></p></div>
+              </div>
+            </section>
+
+            <section class="about-section">
+              <h3>Security Model</h3>
+              <div class="feature-list compact">
+                <div><strong>AES-256-CBC</strong><span>Payload encryption for primary and decoy content.</span></div>
+                <div><strong>scrypt</strong><span>Key derivation for password-based payload access.</span></div>
+                <div><strong>Separated carrier and payload stages</strong><span>Carrier extraction is separated from inner payload decryption.</span></div>
+                <div><strong>Local-only execution</strong><span>No cloud dependency for encode or decode workflows.</span></div>
+              </div>
+            </section>
+
+            <section class="about-section">
+              <h3>Runtime Architecture</h3>
+              <div class="architecture-line">
+                <span>Local FastAPI backend</span>
+                <span>PyWebView desktop shell</span>
+                <span>Offline/local-first operation</span>
+              </div>
+            </section>
+          </div>
+          <div class="about-card">
+            <div class="about-rail-group">
+              <span>Runtime</span>
+              <strong>Local FastAPI backend with a PyWebView desktop shell</strong>
+            </div>
+            <div class="about-rail-group">
+              <span>Security</span>
+              <strong>AES-256-CBC · scrypt · local-only execution</strong>
+            </div>
+            <div class="about-rail-group">
+              <span>Techniques</span>
+              <strong>LSB for images/audio/video · PVD for images</strong>
+            </div>
+            <div class="developers">
+              <h3>Developers</h3>
+              <p>Jainam Jain</p>
+              <p>Sahil Patil</p>
+              <p>Himanshu Shinde</p>
+              <p>Aditya Deshmukh</p>
+              <span>Built at Vidyalankar Institute of Technology.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <div class="modal-backdrop" id="editorModal" hidden>
+    <div class="modal-card">
+      <div class="modal-head">
+        <h2 id="editorModalTitle">Edit text</h2>
+        <button class="tertiary-btn" id="editorModalClose">Done</button>
+      </div>
+      <textarea id="editorModalText" class="modal-textarea"></textarea>
+      <div class="modal-foot">
+        <span id="editorCharCount">0 characters</span>
+        <button class="tertiary-btn" id="editorClearBtn">Clear</button>
+        <button class="secondary-btn" id="editorSaveBtn">Save</button>
+      </div>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

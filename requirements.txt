@@ -1,0 +1,8 @@
+fastapi==0.136.0
+uvicorn==0.44.0
+pywebview==6.2.1
+pydantic==2.13.2
+pillow==12.2.0
+pycryptodome==3.23.0
+numpy==2.4.4
+av==17.0.1
