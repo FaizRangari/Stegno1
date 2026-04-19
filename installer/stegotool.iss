@@ -1,5 +1,5 @@
 #define MyAppName "StegoTool Pro"
-#define MyAppVersion "1.0.0"
+#define MyAppVersion "1.0.1"
 #define MyAppPublisher "StegoTool Pro"
 #define MyAppExeName "StegoToolPro.exe"
 
@@ -12,7 +12,7 @@ DefaultDirName={autopf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
 DisableProgramGroupPage=yes
 OutputDir=..\dist\installer
-OutputBaseFilename=StegoToolPro-Setup-1.0.0
+OutputBaseFilename=StegoToolPro-Setup-1.0.1
 SetupIconFile=..\assets\logo.ico
 Compression=lzma
 SolidCompression=yes

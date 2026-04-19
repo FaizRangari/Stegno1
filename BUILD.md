@@ -1,6 +1,6 @@
 # Build Guide
 
-This guide prepares the v1.0.0 Windows desktop release for StegoTool Pro.
+This guide prepares the v1.0.1 Windows desktop release for StegoTool Pro.
 
 ## 1. Create a Virtual Environment
 
@@ -56,7 +56,7 @@ iscc installer\stegotool.iss
 Expected output:
 
 ```text
-dist\installer\StegoToolPro-Setup-1.0.0.exe
+dist\installer\StegoToolPro-Setup-1.0.1.exe
 ```
 
 ## 6. Clean Build Artifacts

@@ -4,6 +4,7 @@ import os
 import struct
 import wave
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from fractions import Fraction
 
 import numpy as np
 from PIL import Image
@@ -208,7 +209,14 @@ def get_video_info(video_path: str) -> dict:
         frame_count = stream.frames
         if frame_count == 0:
             frame_count = sum(1 for _ in container.decode(video=0))
-        return {"width": stream.width, "height": stream.height, "frames": frame_count, "rate": stream.average_rate}
+        rate = stream.average_rate or stream.base_rate or getattr(stream, "guessed_rate", None)
+        return {
+            "width": stream.width,
+            "height": stream.height,
+            "frames": frame_count,
+            "rate": rate,
+            "time_base": stream.time_base,
+        }
 
 
 def _embed_bits_in_frame(frame_arr: np.ndarray, frame_idx: int, binary_payload: str, start_bit: int, password_str: str):
@@ -223,7 +231,7 @@ def _embed_bits_in_frame(frame_arr: np.ndarray, frame_idx: int, binary_payload: 
         for ch in range(3):
             if data_idx >= len(binary_payload):
                 break
-            pixels[pid, ch] = (pixels[pid, ch] & 0xFE) | int(binary_payload[data_idx])
+            pixels[pid, ch] = np.uint8((int(pixels[pid, ch]) & 0xFE) | int(binary_payload[data_idx]))
             data_idx += 1
     return frame_idx, arr, data_idx - start_bit
 
@@ -342,6 +350,43 @@ def decode_video(video_path: str, password_str: str, progress_cb=None):
         return None, f"Video decode failed: {e}"
 
 
+def _fps_time_base(rate):
+    if not rate:
+        return None
+    return Fraction(rate.denominator, rate.numerator)
+
+
+def _rescale_timestamp(value, source_time_base, target_time_base):
+    if value is None or not source_time_base or not target_time_base or source_time_base == target_time_base:
+        return value
+    return int(round(value * Fraction(source_time_base) / Fraction(target_time_base)))
+
+
+def _remux_audio_streams(source_path, out_container, audio_streams, out_audio_streams):
+    if not audio_streams:
+        return
+    audio_container = av.open(source_path)
+    try:
+        remux_streams = list(audio_container.streams.audio)
+        audio_map = {src.index: dst for src, dst in zip(remux_streams, out_audio_streams)}
+        source_time_bases = {src.index: src.time_base for src in remux_streams}
+        for packet in audio_container.demux(remux_streams):
+            if packet.stream.index not in audio_map:
+                continue
+            out_stream = audio_map[packet.stream.index]
+            source_time_base = packet.time_base or source_time_bases.get(packet.stream.index)
+            target_time_base = out_stream.time_base or source_time_base
+            packet.pts = _rescale_timestamp(packet.pts, source_time_base, target_time_base)
+            packet.dts = _rescale_timestamp(packet.dts, source_time_base, target_time_base)
+            packet.duration = _rescale_timestamp(packet.duration, source_time_base, target_time_base)
+            packet.time_base = target_time_base
+            packet.stream = out_stream
+            if packet.pts is not None or packet.dts is not None:
+                out_container.mux(packet)
+    finally:
+        audio_container.close()
+
+
 def save_video_pyav(source_path: str, output_path: str, source_info: dict, modified_frames: dict, progress_cb=None):
     if not AV_AVAILABLE:
         raise RuntimeError("PyAV not installed. Run: pip install av")
@@ -350,25 +395,44 @@ def save_video_pyav(source_path: str, output_path: str, source_info: dict, modif
         out_container = av.open(output_path, mode="w")
         try:
             src_stream = in_container.streams.video[0]
-            out_stream = out_container.add_stream("libx264rgb")
+            audio_streams = list(in_container.streams.audio)
+            source_rate = source_info.get("rate") or src_stream.average_rate or src_stream.base_rate or getattr(src_stream, "guessed_rate", None)
+            if source_rate is None:
+                raise RuntimeError("Could not determine source video frame rate.")
+            out_stream = out_container.add_stream("libx264rgb", rate=source_rate)
             out_stream.width = source_info["width"]
             out_stream.height = source_info["height"]
             out_stream.pix_fmt = "rgb24"
             out_stream.options = {"crf": "0", "preset": "ultrafast"}
-            out_stream.time_base = src_stream.time_base
+            source_time_base = source_info.get("time_base") or src_stream.time_base or _fps_time_base(source_rate)
+            if source_time_base:
+                out_stream.time_base = source_time_base
+            out_audio_streams = [out_container.add_stream_from_template(stream) for stream in audio_streams]
+            for src_audio, out_audio in zip(audio_streams, out_audio_streams):
+                if src_audio.time_base:
+                    out_audio.time_base = src_audio.time_base
             total = source_info["frames"]
             for frame_idx, frame in enumerate(in_container.decode(video=0)):
                 if frame_idx in modified_frames:
                     new_frame = av.VideoFrame.from_ndarray(modified_frames[frame_idx], format="rgb24")
                 else:
                     new_frame = av.VideoFrame.from_ndarray(frame.to_ndarray(format="rgb24"), format="rgb24")
-                new_frame.pts = frame.pts
+                frame_time_base = frame.time_base or source_time_base
+                target_time_base = out_stream.time_base or source_time_base
+                if frame.pts is not None:
+                    new_frame.pts = _rescale_timestamp(frame.pts, frame_time_base, target_time_base)
+                    new_frame.time_base = target_time_base
+                else:
+                    frame_base = _fps_time_base(source_rate)
+                    new_frame.pts = _rescale_timestamp(frame_idx, frame_base, target_time_base)
+                    new_frame.time_base = target_time_base
                 for packet in out_stream.encode(new_frame):
                     out_container.mux(packet)
                 if progress_cb and total:
                     progress_cb(frame_idx / total)
             for packet in out_stream.encode():
                 out_container.mux(packet)
+            _remux_audio_streams(source_path, out_container, audio_streams, out_audio_streams)
         finally:
             out_container.close()
     finally:

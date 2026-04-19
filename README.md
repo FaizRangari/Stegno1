@@ -9,10 +9,10 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/iJainamJain/StegoTool-Pro/releases/tag/v1.0.0">
-    <img src="https://img.shields.io/badge/Release-v1.0.0-6f6ad9?style=for-the-badge" alt="Release v1.0.0">
+  <a href="https://github.com/iJainamJain/StegoTool-Pro/releases/tag/v1.0.1">
+    <img src="https://img.shields.io/badge/Release-v1.0.1-6f6ad9?style=for-the-badge" alt="Release v1.0.1">
   </a>
-  <a href="https://github.com/iJainamJain/StegoTool-Pro/releases/download/v1.0.0/StegoToolPro-Setup-1.0.0.exe">
+  <a href="https://github.com/iJainamJain/StegoTool-Pro/releases/download/v1.0.1/StegoToolPro-Setup-1.0.1.exe">
     <img src="https://img.shields.io/badge/Download-Installer-19d3c5?style=for-the-badge" alt="Download Installer">
   </a>
 </p>
@@ -60,15 +60,15 @@ The goal was to bridge the gap between theoretical steganography and a usable so
 ## 📦 Download
 
 <p align="center">
-  <a href="https://github.com/iJainamJain/StegoTool-Pro/releases/download/v1.0.0/StegoToolPro-Setup-1.0.0.exe">
-    <img src="https://img.shields.io/badge/Download%20StegoTool%20Pro%20Installer-v1.0.0-19d3c5?style=for-the-badge" alt="Download StegoTool Pro Installer">
+  <a href="https://github.com/iJainamJain/StegoTool-Pro/releases/download/v1.0.1/StegoToolPro-Setup-1.0.1.exe">
+    <img src="https://img.shields.io/badge/Download%20StegoTool%20Pro%20Installer-v1.0.1-19d3c5?style=for-the-badge" alt="Download StegoTool Pro Installer">
   </a>
 </p>
 
 ### Installation
 
 1. Download the installer
-2. Run `StegoToolPro-Setup-1.0.0.exe`
+2. Run `StegoToolPro-Setup-1.0.1.exe`
 3. Complete installation
 4. Launch from Start Menu or Desktop
 
@@ -197,7 +197,7 @@ Vidyalankar Institute of Technology
 
 ## 🚀 Version
 
-- v1.0.0 — Initial stable release
+- v1.0.1 — Video encoding timeline and audio preservation fix
 
 ---
 

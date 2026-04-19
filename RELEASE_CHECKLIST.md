@@ -1,4 +1,4 @@
-# StegoTool Pro v1.0.0 Release Checklist
+# StegoTool Pro v1.0.1 Release Checklist
 
 ## Environment
 
@@ -63,12 +63,12 @@
 - [ ] EXE starts the local API successfully
 - [ ] EXE can encode and decode a small image payload
 - [ ] EXE icon is correct
-- [ ] File properties show version `1.0.0`
+- [ ] File properties show version `1.0.1`
 
 ## Installer
 
 - [ ] Inno Setup compiles `installer\stegotool.iss`
-- [ ] Installer output is `StegoToolPro-Setup-1.0.0.exe`
+- [ ] Installer output is `StegoToolPro-Setup-1.0.1.exe`
 - [ ] Installer installs into Program Files
 - [ ] Start Menu shortcut launches the app
 - [ ] Optional desktop shortcut launches the app
