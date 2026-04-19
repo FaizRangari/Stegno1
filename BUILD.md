@@ -7,8 +7,8 @@ This guide prepares the v1.0.0 Windows desktop release for StegoTool Pro.
 Run from the `stego_app` directory:
 
 ```powershell
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
+py -3.11 -m venv venv311 
+venv311\Scripts\activate
 python -m pip install --upgrade pip
 ```
 
