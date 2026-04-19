@@ -29,32 +29,33 @@ It combines a modern desktop UI with local processing, encryption support, media
 
 ## ✨ Features
 
-- 🔒 Encode secret data into media files
-- 🔓 Decode hidden data with integrity verification
-- 🕵️ Decoy password support for plausible deniability
-- 🎬 Built-in preview for image, audio, and video
-- 💻 Desktop application with guided workflow
-- ⚡ Fully local processing with no external API dependency
-- 📘 Tutorial page for first-time users
+- 🔒 Encode secret data into media files  
+- 🔓 Decode hidden data with integrity verification  
+- 🕵️ Decoy password support for plausible deniability  
+- 🎬 Built-in preview for image, audio, and video  
+- 💻 Desktop application with guided workflow  
+- ⚡ Fully local processing with no external API dependency  
+- 📘 Tutorial page for first-time users  
 
 ---
 
 ## 📦 Download
 
-<p>
+<p align="center">
   <a href="https://github.com/iJainamJain/StegoTool-Pro/releases/download/v1.0.0/StegoToolPro-Setup-1.0.0.exe">
     <img src="https://img.shields.io/badge/Download%20StegoTool%20Pro%20Installer-v1.0.0-19d3c5?style=for-the-badge" alt="Download StegoTool Pro Installer">
   </a>
 </p>
 
 ### Installation
-1. Download the installer from the button above  
+
+1. Download the installer  
 2. Run `StegoToolPro-Setup-1.0.0.exe`  
 3. Complete installation  
 4. Launch from Start Menu or Desktop  
 
-> Windows may show a SmartScreen warning because the app is not code-signed yet.  
-> Click **More info** → **Run anyway**.
+> ⚠️ Windows may show a SmartScreen warning because the app is not code-signed yet.  
+> Click **More info → Run anyway**.
 
 ---
 
@@ -63,40 +64,41 @@ It combines a modern desktop UI with local processing, encryption support, media
 ### Encode Workflow
 
 <p align="center">
-  <img src="docs/screenshots/encode-payload.png" alt="Encode Payload" width="900"><br><br>
-  <img src="docs/screenshots/encode-carrier.png" alt="Encode Carrier" width="900"><br><br>
-  <img src="docs/screenshots/encode-passwords.png" alt="Encode Passwords" width="900"><br><br>
-  <img src="docs/screenshots/encode-result.png" alt="Encode Result" width="900">
+  <img src="docs/screenshots/encode-payload.png" width="900"><br><br>
+  <img src="docs/screenshots/encode-carrier.png" width="900"><br><br>
+  <img src="docs/screenshots/encode-passwords.png" width="900"><br><br>
+  <img src="docs/screenshots/encode-result.png" width="900">
 </p>
 
 ### Decode Workflow
 
 <p align="center">
-  <img src="docs/screenshots/decode-input.png" alt="Decode Input" width="900"><br><br>
-  <img src="docs/screenshots/decode-result.png" alt="Decode Result" width="900">
+  <img src="docs/screenshots/decode-input.png" width="900"><br><br>
+  <img src="docs/screenshots/decode-result.png" width="900">
 </p>
 
 ---
 
 ## ⚙️ Tech Stack
 
-- **Frontend:** HTML, CSS, JavaScript
-- **Desktop Shell:** PyWebView
-- **Backend:** FastAPI
-- **Core Libraries:**
-  - NumPy
-  - PyCryptodome
-  - Pillow
-  - AV
+- **Frontend:** HTML, CSS, JavaScript  
+- **Desktop Shell:** PyWebView  
+- **Backend:** FastAPI  
+
+**Core Libraries:**
+- NumPy  
+- PyCryptodome  
+- Pillow  
+- AV  
 
 ---
 
 ## 🔐 Security Notes
 
-- All processing is performed locally
-- No data is sent to external services
-- Supports encrypted payload handling
-- Integrity verification helps confirm decoded output correctness
+- All processing is performed locally  
+- No data is sent to external services  
+- Supports encrypted payload handling  
+- Integrity verification ensures correctness of decoded output  
 
 ---
 
@@ -112,18 +114,28 @@ stego_app/
 ├── docs/       # Notes and screenshots
 ├── installer/  # Inno Setup installer files
 ├── build/      # Build configuration
-👨‍💻 Developers
-Jainam Jain (Lead)
-Sahil Patil
-Himanshu Shinde
-Aditya Deshmukh
+
+```
+
+---
+
+## 👨‍💻 Developers
+
+- Jainam Jain (Lead)
+- Sahil Patil
+- Himanshu Shinde
+- Aditya Deshmukh
 
 Vidyalankar Institute of Technology
 
-🚀 Version
+---
 
-v1.0.0 — Initial stable release
+## 🚀 Version
 
-⭐ Feedback
+- v1.0.0 — Initial stable release
 
-If you try the app, feel free to share feedback, issues, or suggestions through the GitHub repository.
+---
+
+## ⭐ Feedback
+
+- If you try the app, feel free to share feedback, issues, or suggestions through the GitHub repository.
