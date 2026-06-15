@@ -191,6 +191,7 @@ stego_app/
 - Himanshu Shinde
 - Aditya Deshmukh
 
+Under the Guidance: Prof. Faiz Rangari
 Vidyalankar Institute of Technology
 
 ---
