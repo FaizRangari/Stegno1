@@ -192,6 +192,7 @@ stego_app/
 - Aditya Deshmukh
 
 Under the Guidance: Prof. Faiz Rangari
+
 Vidyalankar Institute of Technology
 
 ---
