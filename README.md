@@ -186,10 +186,7 @@ stego_app/
 
 ## 👨‍💻 Developers
 
-- Jainam Jain (Lead)
-- Sahil Patil
-- Himanshu Shinde
-- Aditya Deshmukh
+- Jainam Jain
 
 Under the Guidance: Prof. Faiz Rangari
 
